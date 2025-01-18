@@ -4,9 +4,7 @@
 	import Theme from '$lib/states/theme.svelte';
 	import { getImageURL } from '$lib/utils.ts';
 	import { filterStates } from '$lib/states/filter.svelte.ts';
-	import { Ellipsis, Menu } from 'lucide-svelte';
-
-	let openHamburger: boolean = $state(false);
+	import { Ellipsis } from 'lucide-svelte';
 
 	let themeVal: string | null = $derived(theme.getTheme());
 	let { children, data } = $props();
@@ -66,6 +64,7 @@
 						class="menu dropdown-content menu-sm z-[1] mt-3 w-52 rounded-box bg-base-100 p-2 shadow"
 					>
 						<li><a href="/profile">Profile</a></li>
+						<li><a href="/appliedJobs">Applied Jobs</a></li>
 						<li>
 							<form action="/logout" method="post">
 								<button type="submit"> Logout </button>

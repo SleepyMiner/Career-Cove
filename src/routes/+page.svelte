@@ -1,7 +1,13 @@
 <script lang="ts">
-	import Filter from '$lib/components/Filter.svelte';
-
 	let { data } = $props();
+	interface Application {
+		jobId: string;
+		userId: string;
+	}
+
+	const hasApplied = (jobId: string) => {
+		return data.userApplications.some((application: Application) => application.jobId === jobId);
+	};
 </script>
 
 <svelte:head>
@@ -31,8 +37,12 @@
 					<div class="card-actions p-2">
 						<button
 							class="btn btn-primary"
-							onclick={() => document.getElementById(`${job.id}_${job.title}`).showModal()}
-							>View</button
+							onclick={() => {
+								const dialog = document.getElementById(
+									`${job.id}_${job.title}`
+								) as HTMLDialogElement;
+								if (dialog) dialog.showModal();
+							}}>View</button
 						>
 						<dialog id={`${job.id}_${job.title}`} class="modal modal-bottom sm:modal-middle">
 							<div class="modal-box">
@@ -41,7 +51,7 @@
 								</form>
 								<h3 class="flex items-center text-lg">
 									<p>{job.title}</p>
-									<p class="badge badge-accent badge-sm mr-4 rounded md:badge-md lg:badge-lg">
+									<p class="lg:badge-xl badge badge-accent badge-sm mr-4 rounded md:badge-md">
 										{job.orgName}
 									</p>
 								</h3>
@@ -67,10 +77,14 @@
 									</div>
 								</div>
 								<div class="mt-4 flex justify-end">
-									<a
-										class="btn btn-primary btn-sm md:btn-md lg:btn-md"
-										href={`/apply?jobId=${job.id}`}>Apply</a
-									>
+									{#if hasApplied(job.id)}
+										<div class="badge badge-success badge-outline">Applied</div>
+									{:else}
+										<a
+											class="btn btn-primary btn-sm md:btn-md lg:btn-md"
+											href={`/apply?jobId=${job.id}`}>Apply</a
+										>
+									{/if}
 								</div>
 							</div>
 						</dialog>

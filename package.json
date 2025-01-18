@@ -62,6 +62,6 @@
 		"crypto-js": "^4.2.0",
 		"lucide-svelte": "^0.471.0",
 		"pocketbase": "^0.25.0",
-		"zod": "^3.24.1"
+		"svelte-french-toast": "^1.2.0"
 	}
 }

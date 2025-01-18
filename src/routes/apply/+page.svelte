@@ -1,45 +1,31 @@
 <script lang="ts">
-	import { formSchema } from '$lib/schemas.ts';
-	let formData = {
-		name: '',
-		email: '',
-		number: '',
-		address: '',
-		linkedIn: '',
-		portfolioSite: '',
-		resume: '',
-		graduation: '',
-		university: '',
-		degree: '',
-		graduationDate: '',
-		skills: {},
-		workExperience: {},
-		certifications: {}
-	};
+	import { applyAction, enhance } from '$app/forms';
+	import { invalidateAll, goto } from '$app/navigation';
+	import toast, { Toaster } from 'svelte-french-toast';
 
-	const addSkill = () => {
-		const newKey = `skills-${Object.keys(formData.skills).length}`;
-		formData.skills = { ...formData.skills, [newKey]: '' };
-	};
+	let { data } = $props();
+	console.log(data);
+	let loading: boolean = $state(false);
 
-	const addWorkExperience = () => {
-		const index = Object.keys(formData.workExperience).length / 4;
-		formData.workExperience = {
-			...formData.workExperience,
-			[`workExperience-title-${index}`]: '',
-			[`workExperience-company-${index}`]: '',
-			[`workExperience-dates-${index}`]: '',
-			[`workExperience-responsibilities-${index}`]: ''
-		};
-	};
+	const submitLogin = () => {
+		loading = true;
+		return async ({ result }) => {
+			switch (result.type) {
+				case 'success':
+					toast.success('Application submitted successfully');
+					await invalidateAll();
+					if (result.data.redirect) {
+						await goto(result.data.redirect);
+					}
+					break;
+				case 'error':
+					toast.error(result.message);
 
-	const addCertification = () => {
-		const index = Object.keys(formData.certifications).length / 3;
-		formData.certifications = {
-			...formData.certifications,
-			[`certifications-name-${index}`]: '',
-			[`certifications-org-${index}`]: '',
-			[`certifications-date-${index}`]: ''
+					break;
+				default:
+					await applyAction(result);
+			}
+			loading = false;
 		};
 	};
 </script>
@@ -49,7 +35,13 @@
 </svelte:head>
 
 <h1 class="text-center text-xl lg:text-3xl">Apply Career Cove</h1>
-<form action="?/apply" method="POST" class="mt-10 flex flex-col items-center justify-center">
+<form
+	action="?/apply"
+	method="POST"
+	class="mt-10 flex flex-col items-center justify-center"
+	enctype="multipart/form-data"
+	use:enhance={submitLogin}
+>
 	<div class="flex w-full flex-col items-center space-y-2 pt-4">
 		<!------------------------Personal Information------------------------------------>
 		<h1 class="text-center text-lg font-bold lg:text-2xl">Personal Information</h1>
@@ -122,84 +114,11 @@
 			</label>
 			<input type="date" name="graduationDate" class="input input-bordered w-full max-w-md" />
 		</div>
-
-		<!----------------------------Skills------------------------------------------------>
-		<h1 class="pt-10 text-center text-lg font-bold lg:text-2xl">Skills</h1>
-		{#each Object.entries(formData.skills) as [key, skill]}
-			<div class="form-control mb-4 w-full max-w-md">
-				<label for={key} class="label pb-1 font-medium">
-					<span class="label-text">Skill</span>
-				</label>
-				<input
-					id={key}
-					type="text"
-					name={key}
-					class="input input-bordered w-full max-w-md"
-					bind:value={formData.skills[key]}
-				/>
-			</div>
-		{/each}
-		<button onclick={addSkill} type="button" class="btn btn-primary">Add Skill</button>
-
-		<!------------------------Work Experience------------------------------------>
-		<h1 class="pt-10 text-center text-lg font-bold lg:text-2xl">Work Experience</h1>
-		{#each Object.keys(formData.workExperience) as key, index}
-			{#if key.includes(`${index}`)}
-				<div class="form-control mb-4 w-full max-w-md">
-					<label for={key} class="label pb-1 font-medium">
-						<span class="label-text"
-							>{key
-								.split('-')[1]
-								.replace('title', 'Job Title')
-								.replace('company', 'Company Name')
-								.replace('dates', 'Employment Dates')
-								.replace('responsibilities', 'Job Responsibilities')}</span
-						>
-					</label>
-					<input
-						id={key}
-						type="text"
-						name={key}
-						class="input input-bordered w-full max-w-md"
-						bind:value={formData.workExperience[key]}
-					/>
-				</div>
-			{/if}
-		{/each}
-		<button onclick={addWorkExperience} type="button" class="btn btn-primary"
-			>Add Work Experience</button
-		>
-
-		<!------------------------Certifications--------------------->
-		<h1 class="pt-10 text-center text-lg font-bold lg:text-2xl">Certifications</h1>
-		{#each Object.keys(formData.certifications) as key, index}
-			{#if key.includes(`${index}`)}
-				<div class="form-control mb-4 w-full max-w-md">
-					<label for={key} class="label pb-1 font-medium">
-						<span class="label-text"
-							>{key
-								.split('-')[1]
-								.replace('name', 'Certification Name')
-								.replace('org', 'Issuing Organization')
-								.replace('date', 'Issue Date')}</span
-						>
-					</label>
-					<input
-						id={key}
-						type="text"
-						name={key}
-						class="input input-bordered w-full max-w-md"
-						bind:value={formData.certifications[key]}
-					/>
-				</div>
-			{/if}
-		{/each}
-		<button onclick={addCertification} type="button" class="btn btn-primary"
-			>Add Certification</button
-		>
 	</div>
 
 	<div class="w-full max-w-xs pt-4">
-		<button type="submit" class="btn btn-primary w-full">Login</button>
+		<button type="submit" class="btn btn-primary w-full" disabled={loading}>Apply</button>
 	</div>
+
+	<Toaster />
 </form>

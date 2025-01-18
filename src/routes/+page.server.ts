@@ -1,4 +1,4 @@
-import { error } from '@sveltejs/kit';
+import { error, redirect } from '@sveltejs/kit';
 
 export const load = async ({ locals }) => {
 
@@ -6,9 +6,17 @@ export const load = async ({ locals }) => {
         const jobData = await locals.pb.collection('jobs').getFullList({
             sort: '-created',
         });
-
+        if(locals.pb.authStore.isValid) {
+            const userApplications = await locals.pb.collection('applications').getFullList({
+                filter: `userId="${locals.user.id}"`
+            });
         return {
-            jobData:jobData
+            jobData:jobData,
+            userApplications:userApplications
+        }
+        }
+        return {
+            jobData:jobData 
         }
     
     }

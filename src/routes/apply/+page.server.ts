@@ -1,24 +1,57 @@
 import { error, redirect } from '@sveltejs/kit';
-import { formSchema } from '$lib/schemas.ts';
+
+let job:string = "";
+let org:string = "";
+let jobTitle:string = "";
 
 export const load = async({locals, url})=>{
-    const jobId = url.searchParams.get('jobId');
+  if (!locals.pb.authStore.isValid) {
+		throw redirect(303, '/login');
+	}
 
-    console.log(jobId)
+    const jobPostedId = url.searchParams.get('jobId');
+
+    if(jobPostedId){
+      try{
+        const {id, orgName, title} = await locals.pb.collection("jobs").getOne(jobPostedId);
+        job = id;
+        org = orgName;
+        jobTitle = title
+      }
+      catch(err:any){
+        console.log("Error:", err);
+        throw error(err.status, err.message);
+      }
+  }
+  if(!jobPostedId){
+    throw redirect(404, "Job Not found")
+  }
 }
 
 export const actions = {
-    apply: async ({ request }) => {
-        const formData = await request.formData();
-        const data = Object.fromEntries(formData);
+    apply: async ({ request, locals }) => {
 
-      // Validate the form data using the Zod schema
-      try {
-        const validatedData = formSchema.parse(data);
-        // Handle the validated data (e.g., save to database)
-        console.log(validatedData);
-      } catch (e) {
-        console.log(e)
+      const formData = Object.fromEntries(await request.formData());
+
+      try{
+          const applyData = await locals.pb.collection("applications").create({...formData, jobId:job, orgName:org, userId:locals.user.id, jobTitle:jobTitle});
+          
+          return {
+            applyData:applyData,
+            message:"success",
+            redirect: '/'
+          }
       }
+      catch(err:any){
+        console.log("Error:", err);
+        return {
+          message: "error",
+          error: err.message
+      };
+      }
+
+      
+
+
     }
 };
