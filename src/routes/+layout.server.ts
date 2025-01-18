@@ -1,4 +1,4 @@
-export const load = async({ locals, url }) => {
+export const load = async({ locals }) => {
 	if (locals.user) {
 		return {
 			user: locals.user

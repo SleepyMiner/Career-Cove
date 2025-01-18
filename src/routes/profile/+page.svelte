@@ -64,7 +64,6 @@
 				accept=".jpg,.jpeg,.png,.gif"
 				name="avatar"
 				disabled={loading}
-				onchange={showPreview}
 			/>
 
 			{#if loading}
@@ -88,7 +87,7 @@
 			<span class="label-text text-lg"> Name: </span>
 		</div>
 	</label>
-	<p id="name" class="bg-base-200 w-full max-w-xs rounded-full p-2 text-lg">
+	<p id="name" class="w-full max-w-xs rounded-full bg-base-200 p-2 text-lg">
 		{data.userData?.name}
 	</p>
 	<label for="email" class="form-control w-full max-w-xs">
@@ -96,7 +95,7 @@
 			<span class="label-text text-lg"> Email: </span>
 		</div>
 	</label>
-	<p id="email" class="bg-base-200 w-full max-w-xs rounded-full p-2 text-lg">
+	<p id="email" class="w-full max-w-xs rounded-full bg-base-200 p-2 text-lg">
 		{data.userData?.email}
 	</p>
 </div>

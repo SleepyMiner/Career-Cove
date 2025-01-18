@@ -2,18 +2,20 @@
 	import '../app.css';
 	import { theme } from '$lib/states/theme.svelte.js';
 	import Theme from '$lib/states/theme.svelte';
-	import Filter from '$lib/components/Filter.svelte';
-	import { getImageURL } from '$lib/utils';
-	import { Ellipsis } from 'lucide-svelte';
+	import { getImageURL } from '$lib/utils.ts';
+	import { filterStates } from '$lib/states/filter.svelte.ts';
+	import { Ellipsis, Menu } from 'lucide-svelte';
+
+	let openHamburger: boolean = $state(false);
 
 	let themeVal: string | null = $derived(theme.getTheme());
 	let { children, data } = $props();
 </script>
 
-<div data-theme={themeVal}>
+<div data-theme={themeVal} class="min-h-screen">
 	<div class="navbar bg-base-100">
-		<div class="hidden flex-1 lg:flex">
-			<a class="btn btn-ghost text-xl" href="/">Carrer Cove</a>
+		<div class="flex-1">
+			<a class="btn btn-ghost text-lg lg:text-xl" href="/">Carrer Cove</a>
 		</div>
 
 		<div class="flex-none gap-2">
@@ -21,8 +23,8 @@
 				type="text"
 				placeholder="Search"
 				name="imageTitle"
-				class="input input-bordered w-full max-w-xs rounded-full"
-				oninput={(e: Event) => console.log((e.target as HTMLInputElement).value)}
+				class="input input-bordered w-36 max-w-xs rounded-full lg:w-full"
+				oninput={(e: Event) => filterStates.setSearchQuery((e.target as HTMLInputElement).value)}
 			/>
 
 			{#if !data.user}
@@ -37,7 +39,7 @@
 						</div>
 					</div>
 					<ul
-						class="menu dropdown-content menu-sm rounded-box bg-base-100 z-[1] mt-3 w-52 p-2 shadow"
+						class="menu dropdown-content menu-sm z-[1] mt-3 w-52 rounded-box bg-base-100 p-2 shadow"
 					>
 						<li>
 							<a href="/login" class="justify-between">Login</a>
@@ -48,7 +50,7 @@
 			{:else}
 				<div class="dropdown dropdown-end">
 					<div tabindex="0" role="button" class="btn btn-circle btn-ghost">
-						<div class="w-10">
+						<div class="w-8 lg:w-10">
 							<div class="flex justify-center rounded-full">
 								<img
 									src={data.user?.avatar
@@ -61,7 +63,7 @@
 						</div>
 					</div>
 					<ul
-						class="menu dropdown-content menu-sm rounded-box bg-base-100 z-[1] mt-3 w-52 p-2 shadow"
+						class="menu dropdown-content menu-sm z-[1] mt-3 w-52 rounded-box bg-base-100 p-2 shadow"
 					>
 						<li><a href="/profile">Profile</a></li>
 						<li>
@@ -75,7 +77,13 @@
 			<Theme />
 		</div>
 	</div>
-	<Filter />
 
 	{@render children()}
+	<footer class="footer footer-center mt-36 bg-base-300 p-4 text-base-content">
+		<aside>
+			<p>
+				Copyright © {new Date().getFullYear()} - All right reserved by Career Cove @SleepyMiner
+			</p>
+		</aside>
+	</footer>
 </div>
