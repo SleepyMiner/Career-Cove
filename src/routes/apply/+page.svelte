@@ -4,7 +4,6 @@
 	import toast, { Toaster } from 'svelte-french-toast';
 
 	let { data } = $props();
-	console.log(data);
 	let loading: boolean = $state(false);
 
 	const submitLogin = () => {
@@ -20,7 +19,6 @@
 					break;
 				case 'error':
 					toast.error(result.message);
-
 					break;
 				default:
 					await applyAction(result);
@@ -38,7 +36,7 @@
 <form
 	action="?/apply"
 	method="POST"
-	class="mt-10 flex flex-col items-center justify-center"
+	class=" flex flex-col items-center justify-center"
 	enctype="multipart/form-data"
 	use:enhance={submitLogin}
 >

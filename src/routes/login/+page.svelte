@@ -7,11 +7,11 @@
 </svelte:head>
 
 <div class="flex h-full w-full flex-col items-center">
-	<h2 class="text-base-content mt-2 text-center text-3xl font-bold tracking-tight">
+	<h2 class="mt-2 text-center text-3xl font-bold tracking-tight text-base-content">
 		Login to your account
 	</h2>
 	<p class="mt-1 text-center">
-		Or <a href="/register" class="text-primary font-medium hover:cursor-pointer hover:underline"
+		Or <a href="/register" class="font-medium text-primary hover:cursor-pointer hover:underline"
 			>register</a
 		> if you don't already have an account.
 	</p>

@@ -38,7 +38,7 @@
 	<title>Profile - Career Cove</title>
 </svelte:head>
 
-<h1 class="mt-10 text-center text-2xl">Profile</h1>
+<h1 class="text-center text-2xl">Profile</h1>
 <div class="mt-10 flex justify-center">
 	<div class="avatar items-center gap-6">
 		<div class="w-24 rounded-full">

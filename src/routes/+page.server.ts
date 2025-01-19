@@ -16,7 +16,8 @@ export const load = async ({ locals }) => {
         }
         }
         return {
-            jobData:jobData 
+            jobData:jobData ,
+            userApplications:[]
         }
     
     }

@@ -21,9 +21,9 @@
 	<title>Applied Jobs - Career Cove</title>
 </svelte:head>
 
-<h1 class="m-10 text-center text-xl lg:text-3xl">Applied Jobs</h1>
+<h1 class="text-center text-xl lg:text-3xl">Applied Jobs</h1>
 
-<div class="flex flex-wrap justify-center gap-4">
+<div class="mt-8 flex flex-wrap justify-center gap-4">
 	{#each data.userApplications as application}
 		<div class="card w-96 bg-base-300 shadow-xl">
 			<div class="card-body">

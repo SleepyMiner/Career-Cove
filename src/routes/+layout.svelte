@@ -4,14 +4,14 @@
 	import Theme from '$lib/states/theme.svelte';
 	import { getImageURL } from '$lib/utils.ts';
 	import { filterStates } from '$lib/states/filter.svelte.ts';
-	import { Ellipsis } from 'lucide-svelte';
 
 	let themeVal: string | null = $derived(theme.getTheme());
 	let { children, data } = $props();
+	console.log(data);
 </script>
 
-<div data-theme={themeVal} class="min-h-screen">
-	<div class="navbar bg-base-100">
+<div data-theme={themeVal} class="flex h-screen w-full flex-col justify-between">
+	<header class="navbar bg-base-100">
 		<div class="flex-1">
 			<a class="btn btn-ghost text-lg lg:text-xl" href="/">Carrer Cove</a>
 		</div>
@@ -31,10 +31,8 @@
 					<a href="/login" class="btn btn-secondary">Login</a>
 				</div>
 				<div class="dropdown dropdown-end lg:hidden">
-					<div tabindex="0" role="button" class="btn btn-ghost">
-						<div class="w-6">
-							<Ellipsis />
-						</div>
+					<div tabindex="0" role="button" class="btn btn-ghost flex items-center justify-center">
+						<p class="text-3xl">...</p>
 					</div>
 					<ul
 						class="menu dropdown-content menu-sm z-[1] mt-3 w-52 rounded-box bg-base-100 p-2 shadow"
@@ -75,10 +73,11 @@
 			{/if}
 			<Theme />
 		</div>
-	</div>
-
-	{@render children()}
-	<footer class="footer footer-center mt-36 bg-base-300 p-4 text-base-content">
+	</header>
+	<main data-theme={themeVal} class="p-8">
+		{@render children()}
+	</main>
+	<footer class="footer footer-center bg-base-300 p-8 text-base-content" data-theme={themeVal}>
 		<aside>
 			<p>
 				Copyright © {new Date().getFullYear()} - All right reserved by Career Cove @SleepyMiner
