@@ -1,58 +1,70 @@
-# create-svelte
+# Career Cove
 
-Everything you need to build a Svelte library, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/main/packages/create-svelte).
+Career Cove is a job and internship platform designed specifically for college students. It provides a user-friendly interface to search and apply for job opportunities, offering advanced search filters and secure data handling.
 
-Read more about creating a library [in the docs](https://svelte.dev/docs/kit/packaging).
+## Table of Contents
+- [Features](#features)
+- [Technologies Used](#technologies-used)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Contributing](#contributing)
+- [License](#license)
+- [Contact](#contact)
 
-## Creating a project
+## Features
 
-If you're seeing this, you've probably already done this step. Congrats!
+- **Job Listings**: Browse a wide range of job and internship opportunities.
+- **Advanced Search**: Use filters to narrow down job searches based on criteria such as location, job type, and company.
+- **User Profiles**: Create and manage personal profiles to showcase skills and experiences.
+- **Application Tracking**: Track the status of job applications in real-time.
+- **Secure Data Handling**: Ensure user data is handled securely and confidentially.
 
-```bash
-# create a new project in the current directory
-npx sv create
+## Technologies Used
 
-# create a new project in my-app
-npx sv create my-app
-```
+- **JavaScript**
+- **Svelte**
+- **TypeScript**
+- **TailwindCSS**
+- **DaisyUI**
 
-## Developing
+## Installation
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+To set up the project locally, follow these steps:
 
-```bash
-npm run dev
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/SleepyMiner/Career-Cove.git
+   cd Career-Cove
+   ```
+2. Install the dependencies:
+   ```bash
+   bun install
+   ```
+3. Start the development server:
+   ```bash
+   bun dev
+   ```
+4. Open your browser and navigate to `http://localhost:5173`
 
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
+## Usage
+- Homepage: View the latest job and internship listings.
+- Search Jobs: Use the search bar and filters to find specific job opportunities.
+- Profile Management: Create and update your profile to attract potential employers.
+- Apply for Jobs: Submit applications directly through the platform.
+- Track Applications: Monitor the status of your job applications.
 
-Everything inside `src/lib` is part of your library, everything inside `src/routes` can be used as a showcase or preview app.
+## Contributing
+We welcome contributions to Career Cove! To contribute:
 
-## Building
+1. Fork the repository.
+2. Create a new branch (git checkout -b feature-branch).
+3. Make your changes and commit them (git commit -m 'Add new feature').
+4. Push to the branch (git push origin feature-branch).
+5. Open a pull request.
+Please ensure your code follows our coding guidelines and includes appropriate tests.
 
-To build your library:
+## License
+This project is licensed under the MIT License. See the [LICENSE](./LICENSE) file for details.
 
-```bash
-npm run package
-```
-
-To create a production version of your showcase app:
-
-```bash
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
-
-## Publishing
-
-Go into the `package.json` and give your package the desired name through the `"name"` option. Also consider adding a `"license"` field and point it to a `LICENSE` file which you can create from a template (one popular option is the [MIT license](https://opensource.org/license/mit/)).
-
-To publish your library to [npm](https://www.npmjs.com):
-
-```bash
-npm publish
-```
+## Contact
+If you have any questions or suggestions, feel free to open an issue or [contact](mailto:swayamgupta5698@gmail.com) me.
